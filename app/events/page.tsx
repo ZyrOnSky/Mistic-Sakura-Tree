@@ -10,11 +10,15 @@ async function getEvents(categoria?: string) {
   const where = categoria && categoria !== 'all' 
     ? { publicado: true, categoria } 
     : { publicado: true }
-  
-  return await prisma.evento.findMany({
-    where,
-    orderBy: { fecha: 'asc' },
-  })
+  try {
+    return await prisma.evento.findMany({
+      where,
+      orderBy: { fecha: 'asc' },
+    })
+  } catch (error) {
+    console.error('[events] Error fetching events:', error)
+    throw error
+  }
 }
 
 export default async function EventsPage({
@@ -22,7 +26,25 @@ export default async function EventsPage({
 }: {
   searchParams: { categoria?: string }
 }) {
-  const eventos = await getEvents(searchParams.categoria)
+  let eventos = []
+  try {
+    eventos = await getEvents(searchParams.categoria)
+  } catch (error: any) {
+    // Log the error server-side so Netlify shows the stack trace in Function logs
+    console.error('[events] Server render error in EventsPage:', error)
+    // Render a user-friendly message instead of crashing
+    return (
+      <div className="min-h-screen">
+        <Navbar />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="text-center py-20">
+            <h2 className="text-2xl font-semibold text-white mb-4">Error del servidor</h2>
+            <p className="text-gray-400">Ha ocurrido un error al cargar los eventos. He registrado el error en los logs del servidor.</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   const categorias = [
     'Clan/Gremios',
