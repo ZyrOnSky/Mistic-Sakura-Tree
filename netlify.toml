@@ -1,0 +1,10 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[context.production.environment]
+# Añade aquí variables de entorno si quieres fijarlas en el fichero (recomendado: usar UI o Netlify CLI)
+# Ejemplo: DATABASE_URL = "${DATABASE_URL}"
