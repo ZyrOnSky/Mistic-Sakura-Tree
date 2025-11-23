@@ -1,6 +1,6 @@
 # Mistic Sakura Tree Portal
 
-Este repositorio contiene una aplicación Next.js (carpeta `app/`) lista para desplegar en GitHub y Netlify.
+Este repositorio contiene una aplicación web, es un ejercicio personal con el que buscaba crear un plantilla que sirva como portal web para comunidades, en las que estas puedan ir publicando eventos de su comunidad y dar informacion sobre sus respectivas comunidades, actualmente continuo su desarrollo.
 
 Guía rápida de despliegue
 
